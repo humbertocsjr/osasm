@@ -25,8 +25,8 @@ FileNameSize    = 13            |these include one more space
 LineNumberSize  =  6
 SymbolSize      = 30
 
-.include dos.i
-.include symtab.i
+.include asm\dos.i
+.include asm\symtab.i
 
   call OpenInputFile
   call AnalyzeFile
@@ -449,6 +449,6 @@ References:
   .word 0
 Option:
   .byte 0
-.include display.s
+.include asm\display.s
 
 EndOfCode:
