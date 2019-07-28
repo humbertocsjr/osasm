@@ -12,6 +12,6 @@
 PlatformMessage:
   .asciz "DOS"
 VersionMessage:
-  .asciz "v 1.11 [US-EN]"
+  .asciz "v 1.12 [US-EN]"
 
 EndOfCode:

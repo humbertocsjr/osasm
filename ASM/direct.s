@@ -239,4 +239,39 @@ IncludeFileError:
   mov  bx,#IncludeFileErrorMessage
   call PanicRecover
 
-  
+|.mark
+
+MarkedSymTable:
+  .word 0
+MarkedStrTable:
+  .word 0
+
+ProcMark:
+  push ax
+  mov ax, LastFilledSymbol
+  mov MarkedSymTable, ax
+  mov ax, StringSpace
+  mov MarkedStrTable, ax
+  pop ax
+  ret
+
+ProcRelease:
+  push ax
+  push cx
+  push di
+  mov ax, MarkedSymTable
+  mov LastFilledSymbol, ax
+  mov ax, MarkedStrTable
+  mov StringSpace, ax
+
+  mov di, MarkedSymTable
+ProcReleaseLoop:
+  mov ax, #0
+  stosw
+  cmp di, #SymTabEnd
+  jz ProcReleaseLoop
+
+  pop di
+  pop cx
+  pop ax
+  ret

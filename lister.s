@@ -211,6 +211,7 @@ LoadTables:
   ret
 
 LoadXrefTable:
+  .mark
   mov  dx,#EndOfCode
   mov  XrefTableStart,dx
 MoreXrefEntries:
@@ -231,6 +232,7 @@ MoreXrefEntries:
 EndOfXrefTable:
   mov  XrefTableEnd,dx
   ret
+  .release
 
 LoadSymbolTable:
   mov  dx,#AsmSymbolTableStart

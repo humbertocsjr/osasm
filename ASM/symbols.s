@@ -57,6 +57,8 @@ SymbolNotFound:
 |    .word n             Assemble n as a word
 |    .zerow n            Assemble n words of zeros
 |    .include filename   Include the specified file
+|    .mark               Save current position on symtable
+|    .release            Restore saved position to symtable
 
 Directives:
   .byte 2
@@ -118,6 +120,12 @@ Directives:
   .byte 6
   .ascii ".zerow"
   .word ProcZeroWords
+  .byte 5
+  .ascii ".mark"
+  .word ProcMark
+  .byte 8
+  .ascii ".release"
+  .word ProcRelease
   .byte 0
 
 

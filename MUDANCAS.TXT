@@ -1,3 +1,6 @@
+Versao 1.12
+1. Implementacao do .mark e .release para liberar os simbolos locais ao encerrar um bloco
+
 Versao 1.11
 1. Traducao para portugues, baseado no projeto github venks1/x86-s
 2. Permite incluir arquivos de outras pastas
