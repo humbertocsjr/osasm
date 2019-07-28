@@ -1,4 +1,4 @@
-.include OS\DOS.S
+.include OS\BIOS.S
 .include LANG\PTBR.S
 
 VersionMessage:

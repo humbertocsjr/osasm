@@ -1,4 +1,3 @@
-OutputFrom = 256
 
 PresentOutputOffset:
   .word OutputStart + OutputFrom

@@ -180,9 +180,9 @@ ConstructOutputFileNames:
   mov  OutputFileNameOffset,di
   rep
   movsb
-  mov  ax,#'c'!'.'
+  mov  ax,#OutputFileNameExt1
   stosw
-  mov  ax,#'m'!'o'
+  mov  ax,#OutputFileNameExt2
   stosw
   xorb  al,al
   stosb

@@ -1,0 +1,16 @@
+@ECHO OFF
+
+cd BIN
+del OSASM???.COM
+cd ..
+
+call MAKE\OSASMMAK OSASMBEN
+call MAKE\OSASMMAK OSASMBPT
+
+call MAKE\OSASMMAK OSASMDEN
+call MAKE\OSASMMAK OSASMDPT
+
+del *.LST
+copy *.COM BIN\
+del *.com
+cd ..
