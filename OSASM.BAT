@@ -15,8 +15,8 @@ if "%2"=="EN"  set OSALANG=%2
 if "%2"=="pt"  set OSALANG=%2
 if "%2"=="en"  set OSALANG=%2
 if "%1"=="" goto :erro
-if "%2"=="" set OSAFILE=%1
 if "%3"=="" set OSAFILE=%2
+if "%2"=="" set OSAFILE=%1
 
 CALL BIN\OSASM%OSAARCH%%OSALANG%.COM %OSAFILE%
 goto :fim
