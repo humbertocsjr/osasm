@@ -120,12 +120,12 @@ Directives:
   .byte 6
   .ascii ".zerow"
   .word ProcZeroWords
-  .byte 5
-  .ascii ".mark"
-  .word ProcMark
-  .byte 8
-  .ascii ".release"
-  .word ProcRelease
+|  .byte 5
+|  .ascii ".mark"
+|  .word ProcMark
+|  .byte 8
+|  .ascii ".release"
+|  .word ProcRelease
   .byte 0
 
 
