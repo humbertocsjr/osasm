@@ -1,5 +1,6 @@
 Versao 1.13
 1. Criacao da derivacao para criacao de Arquivo .SYS 
+2. Desfaz .mark e .release ate corrigir bugs
 
 Versao 1.12
 1. Implementacao do .mark e .release para liberar os simbolos locais ao encerrar um bloco
