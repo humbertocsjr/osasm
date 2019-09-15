@@ -1,9 +1,9 @@
-|This procedure is called, in case the assembler found an error, the
-|On input
-|  BX points to the message to be printed
-|
-|The procedure print 'asm :', the message, a carriage return and a line feed
-|and exits to dos
+;This procedure is called, in case the assembler found an error, the
+;On input
+;  BX points to the message to be printed
+;
+;The procedure print 'asm :', the message, a carriage return and a line feed
+;and exits to dos
 
 
 PanicRecover:
@@ -146,7 +146,7 @@ CommaMessage:
 ColonMessage:
   .asciz ":"
 QuotesMessage:
-  .byte 34		|double quotes
+  .byte 34		;double quotes
   .byte 0
 DisplacementMessage:
   .asciz "deslocamento"

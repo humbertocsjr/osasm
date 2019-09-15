@@ -1,27 +1,27 @@
-|Lister - print the symbol table of the assembler from the list file.
-| Version 1.6
-| 1. Accomodated undefined symbols in the symbol table.
-| 2. Recognizes the new flag in symtab.i
-| 3. Generates 'undef' for such symbols. (still gives a line no and a 
-|    file name though) perhaps that should be prevented!
-|
-| Version 1.5
-| 1. Accomodate xref at the beginning of file
-| 2. Made functions modular - adjusting functions
-| 3. Generate Symbol wise Cross References
-| 4. Added commandline options - default is to just display symbol table
-|    options include 
-|    -x to generate references and counts
-|    -z to list only unreferenced symbols
-|
-|Usage
-|       lister filename
-|
-|No default extension is assumed, the file, as specified should exist
-|
+;Lister - print the symbol table of the assembler from the list file.
+; Version 1.6
+; 1. Accomodated undefined symbols in the symbol table.
+; 2. Recognizes the new flag in symtab.i
+; 3. Generates 'undef' for such symbols. (still gives a line no and a 
+;    file name though) perhaps that should be prevented!
+;
+; Version 1.5
+; 1. Accomodate xref at the beginning of file
+; 2. Made functions modular - adjusting functions
+; 3. Generate Symbol wise Cross References
+; 4. Added commandline options - default is to just display symbol table
+;    options include 
+;    -x to generate references and counts
+;    -z to list only unreferenced symbols
+;
+;Usage
+;       lister filename
+;
+;No default extension is assumed, the file, as specified should exist
+;
 CR              = 13
 
-FileNameSize    = 13            |these include one more space
+FileNameSize    = 13            ;these include one more space
 LineNumberSize  =  6
 SymbolSize      = 30
 
@@ -36,10 +36,10 @@ ExitToDos:
   movb ah,#TerminateFunction
   int  #DosInterrupt
 
-|Get the filename from the command line
-|Display Message about file name
-|Open the file,
-|
+;Get the filename from the command line
+;Display Message about file name
+;Open the file,
+;
 OpenInputFile:
   call GetInputFileName
   call DisplayMessage
@@ -50,7 +50,7 @@ OpenInputFile:
   .asciz "'"
   call PutCarriageReturn
 
-|Open the input file for reading
+;Open the input file for reading
   movb ah,#OpenFileFunction
   movb al,#ReadOnly
   int  #DosInterrupt
@@ -97,7 +97,7 @@ DisplayPaddedSymbol:
   movb al,#SymbolSize
   jmps OtherPaddedDisplay
 DisplayPaddedFileName:
-  movb al,#FileNameSize         |Chars for the filename
+  movb al,#FileNameSize         ;Chars for the filename
 OtherPaddedDisplay:
   call DisplayOtherMessage
 PaddedDisplayEnd:
@@ -106,7 +106,7 @@ PaddedDisplayEnd:
 
 DisplayPaddedLineNumber:
   call DisplayAXInDecimal
-  movb al,#LineNumberSize       |Chars for the line number
+  movb al,#LineNumberSize       ;Chars for the line number
   jmps PaddedDisplayEnd
 
 DisplaySymbolEntry:
@@ -134,7 +134,7 @@ ListNotLabel:
   .asciz "Equate"
   jmps ListTypeDone
 ListTypeDone:
-  movb al,#7                    |Chars for description
+  movb al,#7                    ;Chars for description
   call PadWithSpaces
 
   mov  ax,Value[si]
@@ -171,7 +171,7 @@ DontDisplayReferenceCount:
   pop  si
   cmpb Option,#'z'
   jnz  DontDisplayZeroRef
-  call DisplayZeroReferenceSymbol       |On for listing unreferreds
+  call DisplayZeroReferenceSymbol       ;On for listing unreferreds
 DontDisplayZeroRef:
   ret
 
@@ -211,7 +211,6 @@ LoadTables:
   ret
 
 LoadXrefTable:
-  .mark
   mov  dx,#EndOfCode
   mov  XrefTableStart,dx
 MoreXrefEntries:
@@ -232,7 +231,6 @@ MoreXrefEntries:
 EndOfXrefTable:
   mov  XrefTableEnd,dx
   ret
-  .release
 
 LoadSymbolTable:
   mov  dx,#AsmSymbolTableStart
@@ -277,7 +275,7 @@ AdjustTables:
 
 AdjustSymbolTable:
   mov  si,ListSymbolTableStart
-  mov  cx,ListStringTableStart          |find the diff in the positions
+  mov  cx,ListStringTableStart          ;find the diff in the positions
   sub  cx,AsmStringTableStart
 MoreSymbolEntriesToAdjust:
   cmp  si,ListSymbolTableEnd
@@ -307,8 +305,8 @@ MoreXrefEntriesToAdjust:
 AdjustedXrefTable:
   ret
 
-|si pointer to symbol table entry
-|cx difference between the string tables
+;si pointer to symbol table entry
+;cx difference between the string tables
   
 
 AdjustName:
@@ -350,14 +348,14 @@ CloseInputFile:
   int  #DosInterrupt
   ret
 
-|Find the name of the file from the command line and terminate it
-|with a nul character. The offset of the string is returned in dx!
-|If there is no file name then display usage message.
-|
-|Destroys:
-| si : to make it point to the command line
-| dx : for return
-| al : for temp storage.
+;Find the name of the file from the command line and terminate it
+;with a nul character. The offset of the string is returned in dx!
+;If there is no file name then display usage message.
+;
+;Destroys:
+; si : to make it point to the command line
+; dx : for return
+; al : for temp storage.
 
 GetInputFileName:
   mov  si,#CommandLineStart 
@@ -400,7 +398,7 @@ InvalidOption:
   mov  bx,#InvalidOptionMessage
   call Panic
 
-|No filename on command line - display usage message and quit
+;No filename on command line - display usage message and quit
 
 Usage:
   mov  bx,#UsageMessage
@@ -412,7 +410,7 @@ Panic:
   jmp  ExitToDos
   
 
-|Messages for the lister
+;Messages for the lister
 
 UsageMessage:
   .asciz  "Usage: lister [-xz] <filename>"
@@ -424,7 +422,7 @@ CorruptListFileMessage:
   .asciz  "The List file is corrupt! Can't analyze"
 InvalidOptionMessage:
   .asciz  "The valid options are only x or z"
-|Data
+;Data
 InputFileHandle:
   .word 0
 AsmSymbolTableStart:

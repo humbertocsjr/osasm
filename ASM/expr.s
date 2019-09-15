@@ -1,21 +1,21 @@
-|CompileExpression
+;CompileExpression
 
 
 OpenBrackPrec  = 1
 AddOpPrec      = 2
 MulOpPrec      = 3
-BangOpPrec     = 4		    |of the binary ! operator
+BangOpPrec     = 4		    ;of the binary ! operator
 UnaryOpPrec    = 50
 
 
 
-|CompileExpression
-|
+;CompileExpression
+;
 
 CompileExpression:
-  mov  bx , #1                      |last was operator(bh) = 0 start (bl) = 1
-  movb  dl, #0                      |operand count.
-  movb  dh, #0                      |operands needed
+  mov  bx , #1                      ;last was operator(bh) = 0 start (bl) = 1
+  movb  dl, #0                      ;operand count.
+  movb  dh, #0                      ;operands needed
   pushf
   xor  ax,ax
   stosw
@@ -44,21 +44,21 @@ SyntaxErrorMessage:
 CanGetConstNow:
   call GetIdForToken
   stosw
-  xor  bx,bx                       |Last was operator = 0 | start = 0
-  incb  dl                          |operand count
+  xor  bx,bx                       ;Last was operator = 0 ; start = 0
+  incb  dl                          ;operand count
   incb  dh
   jmps CompileNext
 
 NotNumber:
   call IsOperator
   jnz  NotAnOperator
-  or   bx,bx                       |last was operator or start
+  or   bx,bx                       ;last was operator or start
   jz   LastWasNotOperator
   call IsUnaryOperator
   jz   WasUnaryOperator
   jmp  SyntaxErrorMessage
 WasUnaryOperator:
-  incb  dh                          |unary ops need 0 operands
+  incb  dh                          ;unary ops need 0 operands
   addb  al,#0x80
   movb  ah,#UnaryOpPrec
 LastWasNotOperator:
@@ -66,9 +66,9 @@ LastWasNotOperator:
   decb  dh
 ContinuePopping:
   mov  bp,sp
-  cmpb  1[bp],ah                   |if the operator on stack has a higher
-  jc   FinishedPopping             |or same precedence
-  cmp  0[bp],#0         |if the stack isn't finished
+  cmpb  1[bp],ah                   ;if the operator on stack has a higher
+  jc   FinishedPopping             ;or same precedence
+  cmp  0[bp],#0         ;if the stack isn't finished
   jz   FinishedPopping
   testb cl,#0x80
   jnz  FinishedPopping
@@ -78,10 +78,10 @@ ContinuePopping:
   jmps ContinuePopping
 FinishedPopping:
   push cx
-  movb  bh,#1                        |last was operator = 1
+  movb  bh,#1                        ;last was operator = 1
   testb cl,#0x80
   jnz  dontchangestart
-  xorb bl,bl                       | Start = 0
+  xorb bl,bl                       ; Start = 0
 dontchangestart:
   jmp  CompileNext
 
@@ -90,7 +90,7 @@ NotAnOperator:
   jnz  NotOpenBraces
   movb  ah,#OpenBrackPrec
   push ax
-  mov  bx,#1                        |Last was operator = 0, Start = 1
+  mov  bx,#1                        ;Last was operator = 0, Start = 1
   jmp  CompileNext
 
 NotOpenBraces:
@@ -114,7 +114,7 @@ StoreThisOne:
 
 NotCloseBraces:
 EndofExpression:
-  orb   bl,bl          |start
+  orb   bl,bl          ;start
   jz   FoundSomething
   jmp  SyntaxErrorMessage
 
@@ -136,32 +136,32 @@ Notextraleft:
   or   ax,ax
   jnz  OperatorCountOK
 
-|  mov  si, #PostFixBufferStart
-|  call DisplayMessage
-|  db   'Compiled Expr is :',0
-|NextOperator:
-|  lodsw
-|  call DisplayRegister
-|  call DisplayMessage
-|  db   ' ',0
-|  mov  cl,ah
-|  or   ax,ax
-|  jz   ExpressionEnd
-|  or   cl,cl
-|  jz   NextOperator
-|moretodisplay:
-|  lodsw
-|  call DisplayRegister
-|  call DisplayMessage
-|  db   ' ',0
-|  dec  cl
-|  jnz  moretodisplay
-|  jmp  short NextOperator
-|ExpressionEnd:
-|  mov  ax, StringSpace
-|  call DisplayRegister
-|  call DisplayMessage
-|  db   0dh,0ah,0
+;  mov  si, #PostFixBufferStart
+;  call DisplayMessage
+;  db   'Compiled Expr is :',0
+;NextOperator:
+;  lodsw
+;  call DisplayRegister
+;  call DisplayMessage
+;  db   ' ',0
+;  mov  cl,ah
+;  or   ax,ax
+;  jz   ExpressionEnd
+;  or   cl,cl
+;  jz   NextOperator
+;moretodisplay:
+;  lodsw
+;  call DisplayRegister
+;  call DisplayMessage
+;  db   ' ',0
+;  dec  cl
+;  jnz  moretodisplay
+;  jmp  short NextOperator
+;ExpressionEnd:
+;  mov  ax, StringSpace
+;  call DisplayRegister
+;  call DisplayMessage
+;  db   0dh,0ah,0
   ret
 
 
@@ -289,12 +289,12 @@ EvalEnd:
   pop  ax
   ret
 
-|Identifies unary as well as binary operators. For binary operators,
-|it returns with ah as the precedence of the operator. For unary operators,
-|ah might not make sense, 'cos some operators are binary as well as unary
-|operators - specifically + and -. In such cases, it returns the precedence
-|of the binary operator even if the usage was as a unary operator. This
-|distinction is done later on.
+;Identifies unary as well as binary operators. For binary operators,
+;it returns with ah as the precedence of the operator. For unary operators,
+;ah might not make sense, 'cos some operators are binary as well as unary
+;operators - specifically + and -. In such cases, it returns the precedence
+;of the binary operator even if the usage was as a unary operator. This
+;distinction is done later on.
 
 
 IsOperator:

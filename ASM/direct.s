@@ -1,4 +1,4 @@
-|    .ascii str          assemble a string
+;    .ascii str          assemble a string
 
 QuoteExpected:
   mov  bx,#QuotesMessage
@@ -22,7 +22,7 @@ MoreStringChars:
 EndOfString:
   ret
     
-|    .asciz str          assemble a zero terminated string
+;    .asciz str          assemble a zero terminated string
 
 ProcAsciz:
   call ProcAscii
@@ -30,7 +30,7 @@ ProcAsciz:
   call OutputByte
   ret
 
-|    .align n            align on multiple of n bytes
+;    .align n            align on multiple of n bytes
 
 ProcAlign:
   call GetATNumber
@@ -51,9 +51,9 @@ AlignNeed:
   
 
 
-|    .bss                What follows goes to the bss segment
+;    .bss                What follows goes to the bss segment
 
-|    .byte n             Assemble one or more bytes
+;    .byte n             Assemble one or more bytes
 
 ProcByte:
   call GetATNumber
@@ -65,11 +65,11 @@ ByteEvaluated:
   call OutputByte
   ret
 
-|    .data               What follows goes to the data segment
+;    .data               What follows goes to the data segment
 
-|    .define sym         Export Sym from the file
+;    .define sym         Export Sym from the file
 
-|    .errnz n            Force error if n is nonzero
+;    .errnz n            Force error if n is nonzero
 
 ProcErrnz:
   call GetATNumber
@@ -82,7 +82,7 @@ AssertError:
   mov  bx,#NonZeroMessage
   call PanicRecover
   
-|    .even               Align to an even address
+;    .even               Align to an even address
 
 ProcEven:
   mov  ax,LocationCounter
@@ -93,10 +93,10 @@ ProcEven:
 EvenEnd:
   ret
 
-|    .extern sym         Declare sym external
-|    .globl sym          Same as Extern
+;    .extern sym         Declare sym external
+;    .globl sym          Same as Extern
 
-|    .org adr            Set Address within current segment
+;    .org adr            Set Address within current segment
 
 ProcOrg:
   call GetATNumber
@@ -108,7 +108,7 @@ OrgEnd:
   call CheckOutputOverflow
   ret
   
-|    .space n            Skip n bytes
+;    .space n            Skip n bytes
 
 ProcSpace:
   call GetATNumber
@@ -119,18 +119,18 @@ MoreSpaces:
   loop MoreSpaces
   ret
 
-|    .text               What follows goes to the text segment
+;    .text               What follows goes to the text segment
 
-|    .long n             Assemble n as a long
-|    .short n            Assemble n as a short
-|    .word n             Assemble n as a word
+;    .long n             Assemble n as a long
+;    .short n            Assemble n as a short
+;    .word n             Assemble n as a word
 
 ProcWord:
   call GetATNumber
   call OutputWord
   ret
 
-|    .zerow n            Assemble n words of zeros
+;    .zerow n            Assemble n words of zeros
 
 ATVError:
   mov  bx,#ATVErrorMessage
@@ -159,7 +159,7 @@ MoreZeroWords:
   loop MoreZeroWords
   ret
 
-| .include  filename  include the specified filename
+; .include  filename  include the specified filename
 
 ProcInclude:
   call GetTokenFileName
@@ -174,7 +174,7 @@ pushloop:
   lodsw
   push ax
   loop pushloop
-  push PresentFileNameOffset	|Must be last to be pushed - popped on failure
+  push PresentFileNameOffset	;Must be last to be pushed - popped on failure
   mov  di,StringSpace
   mov  PresentFileNameOffset,di
   mov  si,#InputWord
@@ -235,11 +235,11 @@ EndOfFileName:
   ret
 
 IncludeFileError:
-  pop  PresentFileNameOffset	|The only thing destroyed as yet
+  pop  PresentFileNameOffset	;The only thing destroyed as yet
   mov  bx,#IncludeFileErrorMessage
   call PanicRecover
 
-|.mark
+;.mark
 
 MarkedSymTable:
   .word 0

@@ -36,41 +36,41 @@ ValidSymbolDefinition:
   mov  Value[di],ax
   ret
 
-ProcessExpression:		|maintain flags upto compile
+ProcessExpression:		;maintain flags upto compile
   mov  di,#PostFixBufferStart
   push LastFilledSymbol
   push StringSpace
   call CompileExpression
   mov  si,#PostFixBufferStart
   call EvaluateExpression
-  mov  bx,#9				|IsEquate or Calculated
-  jc   NotEvaluatable			|reclaim strings and entries
+  mov  bx,#9				;IsEquate or Calculated
+  jc   NotEvaluatable			;reclaim strings and entries
 
-  pop  StringSpace		|Evaluatable
+  pop  StringSpace		;Evaluatable
   pop  LastFilledSymbol
   mov  di,LastFilledSymbol
   mov  [di],#0
   ret
 
 NotEvaluatable:
-  pop  cx  |The old StringSpace can go to the moon, new fake symbols added
-  pop  cx  |and the filledsymbol
+  pop  cx  ;The old StringSpace can go to the moon, new fake symbols added
+  pop  cx  ;and the filledsymbol
   and  bx, #NotCalculated
   call IsSimpleExpression
   jnz  NotSimpleExpression
-  or   bx, #IsFake	|not calculated and fake
-|  call DisplayRegister
-|  call DisplayMessage
-|  db   ':Found S ',0
-|  push ax
-|  mov  ax,LastFilledSymbol
-|  call DisplayRegister
-|  pop  ax
-|  call DisplayMessage
-|  db   0dh,0ah,0
+  or   bx, #IsFake	;not calculated and fake
+;  call DisplayRegister
+;  call DisplayMessage
+;  db   ':Found S ',0
+;  push ax
+;  mov  ax,LastFilledSymbol
+;  call DisplayRegister
+;  pop  ax
+;  call DisplayMessage
+;  db   0dh,0ah,0
   ret
   
-NotSimpleExpression:	|Has to be stored on the string space
+NotSimpleExpression:	;Has to be stored on the string space
   mov  ax, StringSpace
   push ax
   call TransferExprToSpace
@@ -82,7 +82,7 @@ DecimalConvertNumber:
   mov  si,#InputWord
   cmpb [si],#'''
   jz   CharLiteralFound
-  cmpb 1[si],#'x'		|Hex Number
+  cmpb 1[si],#'x'		;Hex Number
   jz   HexNumberFound
   xor  ax,ax
   mov  bx,#10
@@ -105,7 +105,7 @@ FinishedDecimalConvert:
   mov  ax,cx
   ret
 HexNumberFound:
-  inc si			|get past the 0x
+  inc si			;get past the 0x
   inc si
   xor ax,ax
 HexNumberFound1:
@@ -164,7 +164,7 @@ IsSimpleExpression:
   push si
   mov  si,#PostFixBufferStart
   lodsw
-  cmp  ax,#256				|0100 for single operand
+  cmp  ax,#256				;0100 for single operand
   jnz  SimpleExprEnd
   lodsw
   lodsw
@@ -175,8 +175,8 @@ SimpleExprEnd:
   pop  si
   ret
 
-|This routine gets an operand from the input
-|
+;This routine gets an operand from the input
+;
 
 GotRegister:
   movb  al,[si]
@@ -193,8 +193,8 @@ GetBasicOperand:
   mov  si,#InputWord
   lodsb
   call IsAlphaAL
-  jnc  NotARegister		|A Register always start with a character
-  cmpb 1[si],#0	|A Register name is always 2 chars
+  jnc  NotARegister		;A Register always start with a character
+  cmpb 1[si],#0	;A Register name is always 2 chars
   jnz  NotARegister
   mov  si,#SmallRegisters
   push bx
@@ -228,11 +228,11 @@ NotanImmediate:
   movb  cl,#5
   ret
 NotAnAddressingMode:
-|  call DisplayMessage
-|  db   'calling',0dh,0ah,0
+;  call DisplayMessage
+;  db   'calling',0dh,0ah,0
   call GetExprValInd1
   pushf
-|  call DisplayRegister
+;  call DisplayRegister
   cmpb InputWord,#'['
   jz   HasAddressToo
   popf
@@ -281,7 +281,7 @@ GEVI1:
   pop  bx
   pop  ax
   or   bx,#IsDefined
-| or   bx,#IsFake
+; or   bx,#IsFake
   mov  Value[di],ax
   mov  Attributes[di],bx
   mov  ax,di

@@ -1,3 +1,6 @@
+Versao 1.14
+1. Alteracao dos comentarios de | para ;
+
 Versao 1.13
 1. Criacao da derivacao para criacao de Arquivo .SYS 
 2. Desfaz .mark e .release ate corrigir bugs

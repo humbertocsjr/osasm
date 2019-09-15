@@ -1,6 +1,6 @@
 
-|Fields of the entry in the offent
-| are offset and changeval
+;Fields of the entry in the offent
+; are offset and changeval
 
 size_offent = 4
 
@@ -39,9 +39,9 @@ LastFilledSymbol:
 StringSpace:
   .word StringTableStart
 
-|This procedure finds the symbol in the symbol table. The symbol is
-|assumed to be in the present input word
-|The offset of the start of the entry found is in di and si
+;This procedure finds the symbol in the symbol table. The symbol is
+;assumed to be in the present input word
+;The offset of the start of the entry found is in di and si
 
 FindSymbol:
   mov  si,#SymTabStart
@@ -85,9 +85,9 @@ DSymbolNotFound:
   stc
   ret
 
-|Add a symbol into the symbol table. The identifier to be added will
-|be in the InputWord. When it returns, di and si (like in the previous
-|function) points to the attributes.
+;Add a symbol into the symbol table. The identifier to be added will
+;be in the InputWord. When it returns, di and si (like in the previous
+;function) points to the attributes.
 AddSymbol:
   mov  di,LastFilledSymbol
   cmp  di,#SymTabEnd
@@ -132,10 +132,10 @@ EndOfInputWord:
   ret
 
 
-|Find a Fake Symbol, if not present,add it
-|
-|ax has the value of the fake symbol
-|
+;Find a Fake Symbol, if not present,add it
+;
+;ax has the value of the fake symbol
+;
 FindFakeSymbol:
   mov di,#InputWord
   push ax
@@ -158,17 +158,17 @@ FindFakeEnd:
   ret
 
 
-|WriteListFile, writes the list file out the format of the list file is
-|
-|1.Symbol table start   :word   as in the assembler
-|2.Symbol table end     :word   points to one byte past the true end.
-|3.Symbol table         :2 - 1  bytes of data, raw symbol table
-|4.String table start   :word   as in the assembler
-|5.String table end     :word   points to one past the end.
-|6.String table         :5 - 4  bytes of data, raw string table
+;WriteListFile, writes the list file out the format of the list file is
+;
+;1.Symbol table start   :word   as in the assembler
+;2.Symbol table end     :word   points to one byte past the true end.
+;3.Symbol table         :2 - 1  bytes of data, raw symbol table
+;4.String table start   :word   as in the assembler
+;5.String table end     :word   points to one past the end.
+;6.String table         :5 - 4  bytes of data, raw string table
 
 WriteListFile:
-  mov  ax,#0                    |Terminate the xref list in the list file
+  mov  ax,#0                    ;Terminate the xref list in the list file
   call WriteListWord
   mov  ax,#SymTabStart
   call WriteListWord
@@ -206,7 +206,7 @@ WriteList:
   jc   ListError
   ret
 
-|Initialise the symbol table
+;Initialise the symbol table
 
 InitSymbolTable:
   mov SymTabStart,#0

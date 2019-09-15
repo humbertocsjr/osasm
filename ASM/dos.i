@@ -9,5 +9,5 @@ WriteFunction           = 0x40
 
 CommandLineStart        = 0x81
 
-|For OpenFileFunction
+;For OpenFileFunction
 ReadOnly                = 0

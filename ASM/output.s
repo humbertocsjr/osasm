@@ -7,9 +7,9 @@ LocationCounter:
 OutputByte:
   push di
   mov  di,PresentOutputOffset
-|  call DisplayRegister
-|  call DisplayMessage
-|  db   ':Outputting ',0dh,0ah,0
+;  call DisplayRegister
+;  call DisplayMessage
+;  db   ':Outputting ',0dh,0ah,0
   stosb
   mov  PresentOutputOffset,di
   call CheckOutputOverflow

@@ -87,7 +87,7 @@ Add3:
 Add3End:
   call IsFirstReg
   jc   FirstWasRegister
-  push ax                       |Second is a register
+  push ax                       ;Second is a register
   movb  al,dl
   call OutputByte
   pop  ax
@@ -405,7 +405,7 @@ SizeOK:
   ret
 VariableNotSmallEnough:
   cmpb ah,#0xFF
-  jz   SizeOK                   |was checking of Msbit, disabled
+  jz   SizeOK                   ;was checking of Msbit, disabled
 VariableTooLarge:
   mov  bx,#LargeOperandMessage
   call PanicRecover
@@ -716,16 +716,16 @@ CheckEOL:
   jz   isEOL
   cmpb  al,#LF
   jz   isEOL
-  cmpb  al,#'|'
+  cmpb  al,#';'
   jz   isEOL
-  cmpb  al,#'|'
+  cmpb  al,#';'
 isEOL:
   pop  si
   ret
 
 isEOL1:
   push ax
-  xorb al,al    |set the zero flag
+  xorb al,al    ;set the zero flag
   pop  ax
   ret
 

@@ -13,7 +13,7 @@ SegReg    = 3
 Immediate = 4
 AddMode   = 5
 Disp      = 6
-|AddDisp   = 7                  |Isn't ever used!
+;AddDisp   = 7                  ;Isn't ever used!
 
 CR    = 13
 LF    = 10
@@ -34,14 +34,14 @@ LF    = 10
   mov bx, #HeaderMessage3
   call DisplayOtherMessage
 
-  call GetFileName                      |Get the name of the file to be
-					|assembled into PresentFilename
+  call GetFileName                      ;Get the name of the file to be
+					;assembled into PresentFilename
   call InitSymbolTable
   call AssembleOneFile
-  jmp  ExitToDos                        |Get back to DOS
+  jmp  ExitToDos                        ;Get back to DOS
 
 CloseInputFile:
-  movb ah,#CloseFileFunction             |Close the input file
+  movb ah,#CloseFileFunction             ;Close the input file
   mov  bx,InputFileHandle
   int  #DosInterrupt
   ret
@@ -56,68 +56,68 @@ CloseOutputFiles:
   ret
 
 GetFileName:
-  mov  si,#CommandLineStart             |Get the start of the command line
-  lodsb                                 |first byte is length of command line
-  orb  al,al                            |If there is no command line then
-  jnz  SkipCommandLineSpaces            |show the
+  mov  si,#CommandLineStart             ;Get the start of the command line
+  lodsb                                 ;first byte is length of command line
+  orb  al,al                            ;If there is no command line then
+  jnz  SkipCommandLineSpaces            ;show the
 ReportNoName:
-  mov  bx,#HelpMessage                  |
-  call Panic                            |help screen to the nosey user.
-SkipCommandLineSpaces:                  |
-  lodsb                                 |Get more chars from the command line
-  cmpb al,#' '                          |Skip spaces at start of name
-  jz   SkipCommandLineSpaces            |Any number of them
-  cmpb al,#'	'                       |Also skip tabs
-  jz   SkipCommandLineSpaces            |
+  mov  bx,#HelpMessage                  ;
+  call Panic                            ;help screen to the nosey user.
+SkipCommandLineSpaces:                  ;
+  lodsb                                 ;Get more chars from the command line
+  cmpb al,#' '                          ;Skip spaces at start of name
+  jz   SkipCommandLineSpaces            ;Any number of them
+  cmpb al,#'	'                       ;Also skip tabs
+  jz   SkipCommandLineSpaces            ;
   cmpb al,#CR
   jz   ReportNoName
-  mov  di,StringSpace                   |Copy the name into the StringSpace
-  mov  PresentFileNameOffset,di         |
-  stosb                                 |done by string insts.
-  mov  bx,si                            |To display of the filename.
-  dec  bx                               |Actually si is pointing at one
-					|past the start of the filename.
-  xorb cl,cl                            |cl is whether the filename
-					|given had an extension or not.
-					|If there was no extension then we
-					|have to put a .s after it.
-					| We assume that there is
-					|enough space to do such a thing
-					|in the command line.
-FindCommandLineCR:                      |white spaces after the name of the
-  lodsb                                 |should be removed
-  stosb                                 |Keep Storing the name
-  cmpb al,#' '                          |it means that that was the end of
-  jz   FoundFilenameEnd                   |the filename
-  cmpb al,#'	'                       |This is true for tabs too
-  jz   FoundFilenameEnd|                |If a '.' is found, it means that
-  cmpb al,#'.'                          |an extension need not be added to
-  jnz  NotTheDotInFilename              |to the filename
-  incb cl                               |record the fact in cl that a dot
-					|has been seen in the input name
+  mov  di,StringSpace                   ;Copy the name into the StringSpace
+  mov  PresentFileNameOffset,di         ;
+  stosb                                 ;done by string insts.
+  mov  bx,si                            ;To display of the filename.
+  dec  bx                               ;Actually si is pointing at one
+					;past the start of the filename.
+  xorb cl,cl                            ;cl is whether the filename
+					;given had an extension or not.
+					;If there was no extension then we
+					;have to put a .s after it.
+					; We assume that there is
+					;enough space to do such a thing
+					;in the command line.
+FindCommandLineCR:                      ;white spaces after the name of the
+  lodsb                                 ;should be removed
+  stosb                                 ;Keep Storing the name
+  cmpb al,#' '                          ;it means that that was the end of
+  jz   FoundFilenameEnd                   ;the filename
+  cmpb al,#'	'                       ;This is true for tabs too
+  jz   FoundFilenameEnd;                ;If a '.' is found, it means that
+  cmpb al,#'.'                          ;an extension need not be added to
+  jnz  NotTheDotInFilename              ;to the filename
+  incb cl                               ;record the fact in cl that a dot
+					;has been seen in the input name
 NotTheDotInFilename:
-  cmpb al,#'/'                    |reset the dot if a path separator
-  jnz  NotSlashinFilename               |is found
+  cmpb al,#'/'                    ;reset the dot if a path separator
+  jnz  NotSlashinFilename               ;is found
   xorb cl,cl
 NotSlashinFilename:
   cmpb al,#'\'
   jnz  NotBackSlashInFilename
   xorb cl,cl
-NotBackSlashInFilename:               |We have to check whether we
-  cmpb al,#CR                         |crash into the tail of the command
-  jnz  FindCommandLineCR              |line. Check for carriage return
-FoundFilenameEnd:                     |Here we are at the end of the name
-  dec  di                             |Adjust, 'cos even the carriage retn
-  orb  cl,cl                          |or white space is in. If there was
-  jnz  NoNeedToPutExtension           |an extension don't put another
-  mov  ax,#'s'!'.'                    |store an extension after the name
-  stosw                               |'.s'
-NoNeedToPutExtension:                 |Terminate the name with a zero
-  movb al,#0                          |character, C and DOS style
-  stosb                               |store the zero
+NotBackSlashInFilename:               ;We have to check whether we
+  cmpb al,#CR                         ;crash into the tail of the command
+  jnz  FindCommandLineCR              ;line. Check for carriage return
+FoundFilenameEnd:                     ;Here we are at the end of the name
+  dec  di                             ;Adjust, 'cos even the carriage retn
+  orb  cl,cl                          ;or white space is in. If there was
+  jnz  NoNeedToPutExtension           ;an extension don't put another
+  mov  ax,#'s'!'.'                    ;store an extension after the name
+  stosw                               ;'.s'
+NoNeedToPutExtension:                 ;Terminate the name with a zero
+  movb al,#0                          ;character, C and DOS style
+  stosb                               ;store the zero
   call CheckStringTableOverflow
   mov  StringSpace,di
-  ret                                 |return to main routine.
+  ret                                 ;return to main routine.
 
 .include asm\symtab.s
 
@@ -141,7 +141,7 @@ AssembleOneFile:
   ret
 
 InputFileOpenError:
-  mov  bx,#NoInputFileMessage    |There was an error - so quit.
+  mov  bx,#NoInputFileMessage    ;There was an error - so quit.
   call Panic
 
 OpenInputFile:
@@ -149,10 +149,10 @@ OpenInputFile:
   mov  dx,PresentFileNameOffset
   int  #DosInterrupt
   jc   CouldNotOpenFile
-  mov  InputFileHandle,ax               |Preserving Carry dangerous stuff
+  mov  InputFileHandle,ax               ;Preserving Carry dangerous stuff
   mov  InputLineNumber,#1
   mov  ax,#0
-  mov  InputBufferReadPtr,ax            |Both Should be the same
+  mov  InputBufferReadPtr,ax            ;Both Should be the same
   mov  InputBufferEndPtr,ax  
 CouldNotOpenFile:
   ret
@@ -175,7 +175,7 @@ ConstructOutputFileNames:
   mov  si,PresentFileNameOffset
   mov  cx,di
   sub  cx,si
-  mov  dx,cx                    |save offset for list file opening
+  mov  dx,cx                    ;save offset for list file opening
   mov  di,StringSpace
   mov  OutputFileNameOffset,di
   rep
@@ -217,13 +217,13 @@ RemoveOutputFile:
   int  #DosInterrupt
   ret
 
-|Assemble
-|The main procedure for processing a file
-|On input, the variable,
-| InputFileHandle - is a valid handle of an opened file.
-|
-|
-|
+;Assemble
+;The main procedure for processing a file
+;On input, the variable,
+; InputFileHandle - is a valid handle of an opened file.
+;
+;
+;
 Assemble:
   mov  SavedStackPointer,sp
 AssembleLabelTail:
@@ -235,7 +235,7 @@ Assemble1:
   call GetWord
   jc   AssembleEnd
   movb al,InputWord
-  cmpb al,#'|'
+  cmpb al,#';'
   jnz  NotAComment
   call GetEndOfLine
   jc   AssembleEnd

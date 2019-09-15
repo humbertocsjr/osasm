@@ -1,7 +1,7 @@
-|symbols.asm
-|
-|This file contains the symbol tables for the assembler.
-|
+;symbols.asm
+;
+;This file contains the symbol tables for the assembler.
+;
 MatchKeyword:
   lodsb
   movb  bl,al
@@ -30,39 +30,39 @@ ThisSymbol:
 NotThisSymbol:
   mov si,bp
   add si,dx
-  add si,bx                             |Number of bytes to skip
-  inc si                                |One more for the length
+  add si,bx                             ;Number of bytes to skip
+  inc si                                ;One more for the length
   jmps MatchKeyword1
 SymbolNotFound:
   stc
   ret
 
-|The pseudo instructions that are accepted by the assembler are
-|    .align n            align on multiple of n bytes
-|    .ascii str          assemble a string
-|    .asciz str          assemble a zero terminated string
-|    .bss                What follows goes to the bss segment
-|    .byte n             Assemble one or more bytes
-|    .data               What follows goes to the data segment
-|    .define sym         Export Sym from the file
-|    .errnz n            Force error if n is nonzero
-|    .even               Align to an even address
-|    .extern sym         Declare sym external
-|    .globl sym          Same as Extern
-|    .long n             Assemble n as a long
-|    .org adr            Set Address within current segment
-|    .short n            Assemble n as a short
-|    .space n            Skip n bytes
-|    .text               What follows goes to the text segment
-|    .word n             Assemble n as a word
-|    .zerow n            Assemble n words of zeros
-|    .include filename   Include the specified file
-|    .mark               Save current position on symtable
-|    .release            Restore saved position to symtable
+;The pseudo instructions that are accepted by the assembler are
+;    .align n            align on multiple of n bytes
+;    .ascii str          assemble a string
+;    .asciz str          assemble a zero terminated string
+;    .bss                What follows goes to the bss segment
+;    .byte n             Assemble one or more bytes
+;    .data               What follows goes to the data segment
+;    .define sym         Export Sym from the file
+;    .errnz n            Force error if n is nonzero
+;    .even               Align to an even address
+;    .extern sym         Declare sym external
+;    .globl sym          Same as Extern
+;    .long n             Assemble n as a long
+;    .org adr            Set Address within current segment
+;    .short n            Assemble n as a short
+;    .space n            Skip n bytes
+;    .text               What follows goes to the text segment
+;    .word n             Assemble n as a word
+;    .zerow n            Assemble n words of zeros
+;    .include filename   Include the specified file
+;    .mark               Save current position on symtable
+;    .release            Restore saved position to symtable
 
 Directives:
   .byte 2
-|0fddwi.byte f,s  .ascii j0fddwi.word j
+;0fddwi.byte f,s  .ascii j0fddwi.word j
   .byte 6
   .ascii ".align"
   .word ProcAlign
@@ -120,18 +120,18 @@ Directives:
   .byte 6
   .ascii ".zerow"
   .word ProcZeroWords
-|  .byte 5
-|  .ascii ".mark"
-|  .word ProcMark
-|  .byte 8
-|  .ascii ".release"
-|  .word ProcRelease
+;  .byte 5
+;  .ascii ".mark"
+;  .word ProcMark
+;  .byte 8
+;  .ascii ".release"
+;  .word ProcRelease
   .byte 0
 
 
 Instructions:
   .byte 4
-|0fddwi.byte f,s  .ascii j0fddwi.word j0fddwi.byte f,s  .byte j
+;0fddwi.byte f,s  .ascii j0fddwi.word j0fddwi.byte f,s  .byte j
   .byte 3
   .ascii "aaa"
   .word NothingElse
@@ -854,12 +854,12 @@ Instructions:
   .byte 0
 
 
-|End of symbols.asm
+;End of symbols.asm
 
 
 AddressingModes:
   .byte 1
-|0fddwi.byte f,s  .ascii j0fddwi.byte j
+;0fddwi.byte f,s  .ascii j0fddwi.byte j
   .byte 5
   .ascii "bx_si"
   .byte 00
