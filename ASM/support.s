@@ -718,6 +718,8 @@ CheckEOL:
   jz   isEOL
   cmpb  al,#';'
   jz   isEOL
+  cmpb  al,#'|'
+  jz   isEOL
   cmpb  al,#';'
 isEOL:
   pop  si

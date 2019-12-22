@@ -2,6 +2,6 @@
 .include LANG\ENUS.S
 
 VersionMessage:
-  .asciz "v1.14 [US-EN]"
+  .asciz "v1.15 [US-EN]"
 
 EndOfCode:

@@ -236,7 +236,10 @@ Assemble1:
   jc   AssembleEnd
   movb al,InputWord
   cmpb al,#';'
-  jnz  NotAComment
+  jz  NotNotAComment
+  cmpb al,#'|'
+  jnz NotAComment
+NotNotAComment:
   call GetEndOfLine
   jc   AssembleEnd
   jmps Assemble1

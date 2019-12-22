@@ -128,6 +128,8 @@ NonAlphaNumeric:
 OnlyThisChar:
   cmpb  al,#';'
   jz   CommentStartIgnore
+  cmpb  al,#'|'
+  jz   CommentStartIgnore
   cmpb  al,#CR
   jz   CommentStartIgnore
   cmpb  al,#LF	
@@ -286,6 +288,8 @@ EolHaveLF:
   jmps GetEndOfLine1
 NoLine:
   cmpb al,#';'                           ;Is it the start of a comment?
+  jz   CommentStarted                   ;If it isn't then we put back the
+  cmpb al,#'|'                           ;Is it the start of a comment?
   jz   CommentStarted                   ;If it isn't then we put back the
   call UnGetChar                        ;extra character that we got.
   clc                                   ;Signal that a line was found
