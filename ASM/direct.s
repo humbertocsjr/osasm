@@ -34,7 +34,6 @@ ProcAsciz:
 
 ProcAlign:
   call GetATNumber
-  jc   ATVError
   mov  bx,ax
   mov  ax,LocationCounter
   xor  dx,dx
@@ -47,7 +46,7 @@ AlignNeed:
   sub  bx,dx
   mov  ax,LocationCounter
   add  ax,bx
-  jmps OrgEnd
+  jmp OrgEnd
   
 
 
@@ -100,7 +99,6 @@ EvenEnd:
 
 ProcOrg:
   call GetATNumber
-  jc   ATVError
 OrgEnd:
   mov  LocationCounter,ax
   add  ax,#OutputStart
@@ -112,8 +110,8 @@ OrgEnd:
 
 ProcSpace:
   call GetATNumber
-  jc   ATVError
   mov  cx,ax
+  xor ax, ax
 MoreSpaces:
   call OutputByte
   loop MoreSpaces

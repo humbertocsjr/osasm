@@ -1,3 +1,8 @@
+Versao 1.16
+1. Alteracao no comando .space para que se comporte igual o .zerow podendo usar formulas
+2. Alteracao nos comandos .org e .align para que aceitem formulas
+3. Modificacao da nomeclatura e organizacao das pastas
+
 Versao 1.15
 1. Compatibilidade dos comentarios | reintroduzida
 
