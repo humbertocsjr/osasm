@@ -1,6 +1,6 @@
 # Old-School Assembler
 
-This is a Minix Assembler compatible for DOS
+Minix Assembler compatible for DOS
 
 # Variants
 
