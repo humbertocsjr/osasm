@@ -2,6 +2,6 @@
 .include LANG\PTBR.S
 
 VersionMessage:
-  .asciz "v1.16 [PT-BR]"
+  .asciz "v1.17 [PT-BR]"
 
 EndOfCode:

@@ -1,4 +1,4 @@
-.include OS\BIOS.S
+.include OS\HUSIS.S
 .include LANG\ENUS.S
 
 VersionMessage:

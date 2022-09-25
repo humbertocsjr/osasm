@@ -157,6 +157,15 @@ MoreZeroWords:
   loop MoreZeroWords
   ret
 
+ProcZeroBytes:
+  call GetATNumber
+  mov  cx,ax
+  xor  ax,ax
+MoreZeroBytess:
+  call OutputByte
+  loop MoreZeroBytess
+  ret
+
 ; .include  filename  include the specified filename
 
 ProcInclude:

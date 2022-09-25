@@ -120,6 +120,9 @@ Directives:
   .byte 6
   .ascii ".zerow"
   .word ProcZeroWords
+  .byte 6
+  .ascii ".zerob"
+  .word ProcZeroBytes
 ;  .byte 5
 ;  .ascii ".mark"
 ;  .word ProcMark

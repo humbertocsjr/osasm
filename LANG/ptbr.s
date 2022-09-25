@@ -73,7 +73,7 @@ HeaderMessage3:
   .ascii " Copyright (c) 1991-2011, Venkat Iyer"
   .byte 13
   .byte 10
-  .ascii " Copyright (c) 2019, Humberto Costa dos Santos Junior"
+  .ascii " Copyright (c) 2019-2022, Humberto Costa dos Santos Junior"
   .byte 13
   .byte 10
   .byte 13
