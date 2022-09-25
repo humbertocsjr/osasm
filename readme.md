@@ -6,7 +6,7 @@ Minix Assembler compatible for DOS
 
 - OSASMCOM - Generate .com file. ORG 0x100
 - OSASMSYS - Generate .sys file. ORG 0x0
-- OSASMPRG - Generate .prg file. ORG 0x1000
+- OSASMPRG - Generate .prg file. ORG 0x800
 
 # Usage
 
